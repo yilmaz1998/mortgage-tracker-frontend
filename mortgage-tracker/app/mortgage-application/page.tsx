@@ -1,7 +1,8 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -16,13 +17,13 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  SelectLabel,
-  SelectGroup
 } from "@/components/ui/select"
+import { axiosInstance } from "@/lib/axios"
 
-export function MortgageApplicationCard() {
+export function MortgageApplicationCard({ onSubmit }: { onSubmit: (event: React.SyntheticEvent<HTMLFormElement>) => void }) {
   return (
     <Card className="w-full max-w-5xl">
+      <form className="space-y-8" onSubmit={onSubmit}>
       <CardHeader>
         <CardTitle>Mortgage Application</CardTitle>
         <CardDescription>
@@ -31,8 +32,8 @@ export function MortgageApplicationCard() {
       </CardHeader>
 
       <CardContent>
-        <form className="space-y-6">
-          <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
             <div className="grid gap-2">
               <Label htmlFor="first_name">First Name</Label>
               <Input id="first_name" name="first_name" required />
@@ -68,22 +69,15 @@ export function MortgageApplicationCard() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="loan_amount">Loan Amount</Label>
-              <Input id="loan_amount" name="loan_amount" type="number" required />
+              <Label htmlFor="annual_income">Annual Income</Label>
+              <Input id="annual_income" name="annual_income" type="number" required />
             </div>
 
             <div className="grid gap-2">
               <Label htmlFor="loan_term_years">Loan Term (Years)</Label>
               <Input id="loan_term_years" name="loan_term_years" type="number" placeholder="Between 1 and 30 years" required />
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="grid gap-2">
-              <Label htmlFor="annual_income">Annual Income</Label>
-              <Input id="annual_income" name="annual_income" type="number" required />
             </div>
 
             <div className="grid gap-2">
@@ -123,22 +117,55 @@ export function MortgageApplicationCard() {
               </Select>
             </div>
           </div>
-        </form>
+        </div>
+
       </CardContent>
 
       <CardFooter>
         <Button type="submit" className="w-full mt-2">
           Submit Application
-        </Button>
+        </Button>   
       </CardFooter>
+      </form> 
     </Card>
   )
 }
 
 const page = () => {
+  const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    try {
+      const formData = new FormData(event.currentTarget)
+      const data = {
+        first_name: formData.get("first_name"),
+        last_name: formData.get("last_name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        property_price: Number(formData.get("property_price")),
+        down_payment: Number(formData.get("down_payment")),
+        loan_term_years: Number(formData.get("loan_term_years")),
+        annual_income: Number(formData.get("annual_income")),
+        credit_score: Number(formData.get("credit_score")),
+        employment_type: formData.get("employment_type"),
+        interest_type: formData.get("interest_type")
+      }
+
+      const response = await axiosInstance.post("/mortgage/application", data)
+
+      if (response.status === 201) {
+        console.log("Mortgage application submitted successfully")
+      } else {
+        console.error("Failed to submit mortgage application")
+      }
+
+    } catch (error) {
+      console.error("An error occurred while submitting the mortgage application", error)
+    }
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
-      <MortgageApplicationCard />
+      <MortgageApplicationCard onSubmit={handleSubmit} />
     </div>
   )
 }

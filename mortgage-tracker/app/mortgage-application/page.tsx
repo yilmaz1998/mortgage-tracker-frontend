@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select"
 import { axiosInstance } from "@/lib/axios"
 import { toast } from 'react-toastify';
+import { useRouter } from "next/navigation"
 
 
 export function MortgageApplicationCard({ onSubmit }: { onSubmit: (event: React.SyntheticEvent<HTMLFormElement>) => void }) {
@@ -134,6 +135,7 @@ export function MortgageApplicationCard({ onSubmit }: { onSubmit: (event: React.
 }
 
 const page = () => {
+  const router = useRouter()
   const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault()
     try {
@@ -157,6 +159,7 @@ const page = () => {
       if (response.status === 201) {
         console.log("Mortgage application submitted successfully")
         toast.success("Mortgage application submitted successfully");
+        router.push(`/mortgage/${response.data.id}`)
       } else {
         console.error("Failed to submit mortgage application")
         toast.error("Failed to submit mortgage application");

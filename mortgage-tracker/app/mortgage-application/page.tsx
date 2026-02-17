@@ -19,6 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { axiosInstance } from "@/lib/axios"
+import { toast } from 'react-toastify';
+
 
 export function MortgageApplicationCard({ onSubmit }: { onSubmit: (event: React.SyntheticEvent<HTMLFormElement>) => void }) {
   return (
@@ -154,14 +156,25 @@ const page = () => {
 
       if (response.status === 201) {
         console.log("Mortgage application submitted successfully")
+        toast.success("Mortgage application submitted successfully");
       } else {
         console.error("Failed to submit mortgage application")
+        toast.error("Failed to submit mortgage application");
       }
 
-    } catch (error) {
+    } catch (error: any) {
       console.error("An error occurred while submitting the mortgage application", error)
+
+      if (error.response) {
+        const backendMessage =
+          error.response.data?.message ||
+          error.response.data?.error ||
+          "Validation failed"
+  
+        toast.error(backendMessage)
     }
   }
+}
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">

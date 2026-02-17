@@ -4,6 +4,10 @@ import { useParams } from "next/navigation"
 import { useState, useEffect } from "react"
 import { axiosInstance } from "@/lib/axios"
 import Mortgage from "@/types/types"
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function MortgageDetailPage() {
     const params = useParams()
@@ -43,18 +47,103 @@ export default function MortgageDetailPage() {
         }).format(amount)
 
     return (
-        <div>
-            <h1>Mortgage Detail Page</h1>
-            <p><strong>Applicant Name:</strong> {mortgage.first_name} {mortgage.last_name}</p>
-            <p><strong>Email:</strong> {mortgage.email}</p>
-            <p><strong>Phone:</strong> {mortgage.phone}</p>
-            <p><strong>Property Price:</strong> {formatCurrency(mortgage.property_price)}</p>
-            <p><strong>Down Payment:</strong> {formatCurrency(mortgage.down_payment)}</p>
-            <p><strong>Annual Income:</strong> {formatCurrency(mortgage.annual_income)}</p>
-            <p><strong>Loan Term (Years):</strong> {mortgage.loan_term_years}</p>
-            <p><strong>Credit Score:</strong> {mortgage.credit_score}</p>
-            <p><strong>Employment Type:</strong> {mortgage.employment_type}</p>
-            <p><strong>Interest Type:</strong> {mortgage.interest_type}</p>
+        <div className="min-h-screen flex items-center justify-center">
+            <Card className="w-full max-w-6xl shadow-xl rounded-2xl">
+                <CardHeader>
+                    <div className="flex mt-1 items-center justify-between">
+                        <CardTitle className="text-2xl">
+                            Mortgage Application Details
+                        </CardTitle>
+
+                        <Badge
+                            variant={
+                                mortgage.status === "approved"
+                                    ? "default"
+                                    : mortgage.status === "rejected"
+                                        ? "destructive"
+                                        : "secondary"
+                            }
+                            className="capitalize"
+                        >
+                            {mortgage.status}
+                        </Badge>
+                    </div>
+                </CardHeader>
+
+                <CardContent className="grid md:grid-cols-2 gap-6 pt-6 text-sm">
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Applicant Name</p>
+                        <p>
+                            {mortgage.first_name} {mortgage.last_name}
+                        </p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Email</p>
+                        <p>{mortgage.email}</p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Phone</p>
+                        <p>{mortgage.phone}</p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Employment Type</p>
+                        <p>{mortgage.employment_type}</p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Property Price</p>
+                        <p>
+                            {formatCurrency(mortgage.property_price)}
+                        </p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Down Payment</p>
+                        <p>
+                            {formatCurrency(mortgage.down_payment)}
+                        </p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Annual Income</p>
+                        <p>
+                            {formatCurrency(mortgage.annual_income)}
+                        </p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Loan Term</p>
+                        <p>
+                            {mortgage.loan_term_years} years
+                        </p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Credit Score</p>
+                        <p>{mortgage.credit_score}</p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <p className="text-muted-foreground">Interest Type</p>
+                        <p>
+                            {mortgage.interest_type}
+                        </p>
+                    </div>
+
+                </CardContent>
+
+                <CardFooter className="mt-2">
+                    <Button>
+                        <Link href="/">            
+                        Go Back
+                        </Link>
+                    </Button>
+                </CardFooter>
+            </Card>
         </div>
     )
 }

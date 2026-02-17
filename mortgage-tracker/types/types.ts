@@ -2,6 +2,7 @@ interface Mortgage {
     id: number;
     first_name: string;
     last_name: string;
+    status: string;
     email: string;
     phone: string;
     property_price: number;

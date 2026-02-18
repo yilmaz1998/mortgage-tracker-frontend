@@ -7,6 +7,7 @@ interface Mortgage {
     phone: string;
     property_price: number;
     down_payment: number;
+    loan_amount: number;
     loan_term_years: number;
     annual_income: number;
     credit_score: number;

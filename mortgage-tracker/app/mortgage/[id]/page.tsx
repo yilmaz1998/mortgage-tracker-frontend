@@ -109,6 +109,12 @@ export default function MortgageDetailPage() {
                     </div>
 
                     <div className="space-y-2">
+                        <p className="text-muted-foreground">Loan Amount</p>
+                        <p> {formatCurrency(mortgage.loan_amount)} </p> 
+                    </div>
+
+
+                    <div className="space-y-2">
                         <p className="text-muted-foreground">Annual Income</p>
                         <p>
                             {formatCurrency(mortgage.annual_income)}

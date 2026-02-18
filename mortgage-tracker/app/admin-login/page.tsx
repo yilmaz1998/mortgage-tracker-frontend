@@ -33,6 +33,8 @@ const page = () => {
             const response = await axiosInstance.post("/admin/login", data)
 
             if (response.status === 200) {
+                const token = response.data.token
+                localStorage.setItem("adminToken", token)
                 toast.success("Admin login successful!")
                 router.push("/admin-dashboard")
             }

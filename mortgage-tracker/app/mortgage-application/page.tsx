@@ -21,6 +21,7 @@ import {
 import { axiosInstance } from "@/lib/axios"
 import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 
 export function MortgageApplicationCard({ onSubmit }: { onSubmit: (event: React.SyntheticEvent<HTMLFormElement>) => void }) {
@@ -125,9 +126,14 @@ export function MortgageApplicationCard({ onSubmit }: { onSubmit: (event: React.
       </CardContent>
 
       <CardFooter>
-        <Button type="submit" className="w-full mt-2">
+      <Button variant="destructive" className="mr-2">
+            <Link href="/">            
+            Go Back
+            </Link>
+        </Button>
+        <Button type="submit">
           Submit Application
-        </Button>   
+        </Button>
       </CardFooter>
       </form> 
     </Card>

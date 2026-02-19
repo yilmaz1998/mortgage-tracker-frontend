@@ -85,6 +85,11 @@ export default function MortgageDetailPage() {
                     </div>
 
                     <div className="space-y-2">
+                        <p className="text-muted-foreground">Application ID</p>
+                        <p> {mortgage.id} </p>
+                    </div>
+
+                    <div className="space-y-2">
                         <p className="text-muted-foreground">Phone</p>
                         <p>{mortgage.phone}</p>
                     </div>
@@ -110,7 +115,7 @@ export default function MortgageDetailPage() {
 
                     <div className="space-y-2">
                         <p className="text-muted-foreground">Loan Amount</p>
-                        <p> {formatCurrency(mortgage.loan_amount)} </p> 
+                        <p> {formatCurrency(mortgage.loan_amount)} </p>
                     </div>
 
 
@@ -144,8 +149,8 @@ export default function MortgageDetailPage() {
 
                 <CardFooter className="mt-2">
                     <Button>
-                        <Link href="/">            
-                        Go Back
+                        <Link href="/">
+                            Go Back
                         </Link>
                     </Button>
                 </CardFooter>

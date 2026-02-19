@@ -27,7 +27,7 @@ The app is deployed on Heroku and Vercel.
 - Approve or reject applications
 - View detailed application info
 
-## Admin Credantials
+## Admin Credentials
 
 - Username: admin
 - Password: admin123
